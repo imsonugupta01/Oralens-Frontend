@@ -15,11 +15,12 @@ function MemberProfile() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const fetchTeamAndOrganization = async (teamId) => {
+  const fetchTeamAndOrganization = async (Id) => {
     try {
-      const teamResponse = await fetch(`${process.env.REACT_APP_ROOT_API_URL}/team/findById/${teamId}`);
+      const teamResponse = await fetch(`${process.env.REACT_APP_ROOT_API_URL}/team/findById/${Id}`);
       if (!teamResponse.ok) throw new Error('Failed to fetch team data.');
       const teamData = await teamResponse.json();
+      console.log(teamData)
       setTeam(teamData);
 
       const orgResponse = await fetch(`${process.env.REACT_APP_ROOT_API_URL}/organization/getById/${teamData.organizationId}`);
@@ -41,6 +42,7 @@ function MemberProfile() {
         setImageUrl(data.imageUrl);
 
         if (data.teamId) {
+          console.log(data.teamId)
           await fetchTeamAndOrganization(data.teamId);
         }
       } catch (err) {
